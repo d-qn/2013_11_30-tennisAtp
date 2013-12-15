@@ -1,0 +1,288 @@
+install.packages(ggplot2)
+install.packages("ggplot2")
+?install.packages
+install.packages(c("devtools", "xts", "wordcloud", "XML", "streamR", "slidify", "scrapeR" , "ROAuth",  "roxygen2" , "extrafont", "extrafontdb" , "maps" , "maptools" ,"markdown", "plyr" ,"RColorBrewer","RCurl","rgdal","RgoogleMaps"                  "rjson", "RJSONIO"))
+install.packages(c("devtools", "xts", "wordcloud", "XML"))
+install.packages(c("streamR", "slidify", "scrapeR" , "ROAuth",  "roxygen2" , "extrafont", "extrafontdb" , "maps" , "maptools" ,"markdown", "plyr" ,"RColorBrewer","RCurl","rgdal","RgoogleMaps"                  "rjson", "RJSONIO"))#
+)
+install.packages(c("streamR", "slidify", "scrapeR" , "ROAuth",  "roxygen2" , "extrafont", "extrafontdb" , "maps" , "maptools" ,"markdown", "plyr" ,"RColorBrewer","RCurl","rgdal","RgoogleMaps",rjson", "RJSONIO"))#
+)
+install.packages(c("streamR", "slidify", "scrapeR" , "ROAuth",  "roxygen2" , "extrafont", "extrafontdb" , "maps" , "maptools" ,"markdown", "plyr" ,"RColorBrewer","RCurl","rgdal","RgoogleMaps",rjson", "RJSONIO"))
+install.packages(c("streamR", "slidify", "scrapeR" , "ROAuth",  "roxygen2" , "extrafont", "extrafontdb" , "maps" , "maptools" ,"markdown", "plyr" ,"RColorBrewer","RCurl","rgdal","RgoogleMaps","rjson", "RJSONIO"))
+require(devtools)#
+install_github('rCharts', 'ramnathv')
+library(rCharts)
+names(iris) = gsub("\\.", "", names(iris))#
+rPlot(SepalLength ~ SepalWidth | Species, data = iris, color = 'Species', type = 'point')
+library("twitteR")#
+#
+###  -------------------------------------------------------------------------------------------------------------  ####
+###      SETTINGS#
+###  -------------------------------------------------------------------------------------------------------------  ####
+#
+consumerKey <- 'mt9qH6vdPhFpLkxVRaNG1g'#
+consumerSecret <- 'ukGV17Ox8BJgs0GDUVI8buBtXBfaZiiYMYRp31AMr0c'#
+searchWords <- c("#swiss", "#switzerland")#
+savedTweets <- "savedTweets.Rdata"#
+#
+runTweetSearch <- FALSE#
+maxTweet <- 200
+ary("twitteR")#
+#
+###  -------------------------------------------------------------------------------------------------------------  ####
+###      SETTINGS#
+###  -------------------------------------------------------------------------------------------------------------  ####
+#
+consumerKey <- 'mt9qH6vdPhFpLkxVRaNG1g'#
+consumerSecret <- 'ukGV17Ox8BJgs0GDUVI8buBtXBfaZiiYMYRp31AMr0c'#
+searchWords <- c("#swiss", "#switzerland")#
+savedTweets <- "savedTweets.Rdata"#
+#
+runTweetSearch <- FALSE#
+maxTweet <- 200
+library("twitteR")#
+#
+###  -------------------------------------------------------------------------------------------------------------  ####
+###      SETTINGS#
+###  -------------------------------------------------------------------------------------------------------------  ####
+#
+consumerKey <- 'mt9qH6vdPhFpLkxVRaNG1g'#
+consumerSecret <- 'ukGV17Ox8BJgs0GDUVI8buBtXBfaZiiYMYRp31AMr0c'#
+searchWords <- c("#swiss", "#switzerland")#
+savedTweets <- "savedTweets.Rdata"#
+#
+runTweetSearch <- FALSE#
+maxTweet <- 200
+require(devtools)
+install_github('rCharts', 'ramnathv')
+names(iris) = gsub("\\.", "", names(iris))#
+rPlot(SepalLength ~ SepalWidth | Species, data = iris, color = 'Species', type = 'point')#
+#
+## Example 2 Facetted Barplot#
+hair_eye = as.data.frame(HairEyeColor)#
+rPlot(Freq ~ Hair | Eye, color = 'Eye', data = hair_eye, type = 'bar')
+library(rCharts)
+names(iris) = gsub("\\.", "", names(iris))#
+rPlot(SepalLength ~ SepalWidth | Species, data = iris, color = 'Species', type = 'point')#
+#
+## Example 2 Facetted Barplot#
+hair_eye = as.data.frame(HairEyeColor)#
+rPlot(Freq ~ Hair | Eye, color = 'Eye', data = hair_eye, type = 'bar')
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+library(scrapeR)#
+library(RColorBrewer)#
+library(ggplot2)#
+library(plyr)#
+n1.file <- "n1players.Rdata"#
+load(n1.file)#
+#
+slams <- c("London-Finals.aspx", "Australian-Open.aspx", "Roland-Garros.aspx", "US-Open.aspx", "Wimbledon.aspx")#
+names(player1) <- sapply(player1, function(p) {#
+		p.splt <- strsplit(p, ",\\s")#
+		paste(gsub("(.*)\\s\\(.*\\)", "\\1", p.splt[[1]][2]), p.splt[[1]][1], sep=" ")#
+})#
+#
+###  -------------------------------------------------------------------------------------------------------------  ####
+###      HELPERS#
+###  -------------------------------------------------------------------------------------------------------------  ####
+#
+# ggplot2 theme no fuss#
+#
+ggtheme <- {#
+  theme_bw() +#
+ #eliminates baground, gridlines, and chart border#
+ theme(#
+   plot.background = element_blank()#
+  ,panel.grid.major = element_blank()#
+  ,panel.grid.minor = element_blank()#
+  ,panel.border = element_blank()#
+  ,panel.background = element_blank()#
+ )#
+}#
+###  -------------------------------------------------------------------------------------------------------------  ####
+###      1. get all grand slam titles#
+###  -------------------------------------------------------------------------------------------------------------  ####
+#
+atpurl.prefix <- "http://www.atpworldtour.com/Tennis/Tournaments/"#
+#
+titles <- do.call(rbind, lapply(slams, function(s) {#
+	sname <- gsub(".aspx", "",s)#
+	url <- paste(atpurl.prefix, s, sep = "")#
+	html.tb <- readHTMLTable(url, stringsAsFactors = FALSE)[[1]]	#
+	html.tb <- html.tb[,1:3]#
+	cbind(ddply(html.tb, .(Singles), summarize, title = length(Year)), tournament = sname)#
+}))#
+#
+# hack to change all space#
+titles[,1]<- gsub("\\s", " ", titles[,1])#
+#titles <- titles[titles[,1] %in% names(player1),]#
+#
+pl.subset <- names(which(tapply(titles$title, titles$Singles, sum) > 3))#
+pl.subset <- pl.subset[pl.subset %in% names(player1)]#
+#
+tit <- titles[titles[,1] %in% pl.subset,]#
+#
+# stacked bar chart#
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar() + scale_fill_brewer() + ggtheme
+titi
+tit
+str(tit)
+factor(tit$Singles)
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+tapply(tit$title, tit$player, sum)
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+tapply(tit$title, tit$Singles, sum)
+order(tapply(tit$title, tit$Singles, sum))
+tapply(tit$title, tit$Singles, sum))
+tapply(tit$title, tit$Singles, sum)
+tapply(tit$title, tit$Singles, sum)
+tapply(tit$title, tit$Singles, sum)
+sumTit<- tapply(tit$title, tit$Singles, sum)
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+sumTit <- tapply(tit$title, tit$Singles, sum)
+sumTit
+order(sumTit)
+names(sumTit)[order(sumTit)]
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+sumTit <- tapply(tit$title, tit$Singles, sum)#
+factor(tit$Singles) <- factor(tit$Singles, levels = names(sumTit)[order(sumTit)])
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+sumTit <- tapply(tit$title, tit$Singles, sum)#
+tit$Singles <- factor(tit$Singles, levels = names(sumTit)[order(sumTit)])
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar() + scale_fill_brewer() + ggtheme
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar() + ggtheme
+dsamp <- diamonds[sample(nrow(diamonds), 1000), ]#
+(d <- qplot(carat, price, data=dsamp, colour=clarity))#
+#
+# Change scale label#
+d + scale_colour_brewer()#
+d + scale_colour_brewer("clarity")#
+d + scale_colour_brewer(expression(clarity[beta]))#
+#
+# Select brewer palette to use, see ?scales::brewer_pal for more details#
+d + scale_colour_brewer(type="seq")#
+d + scale_colour_brewer(type="seq", palette=3)#
+#
+d + scale_colour_brewer(palette="Blues")#
+d + scale_colour_brewer(palette="Set1")#
+#
+# scale_fill_brewer works just the same as#
+# scale_colour_brewer but for fill colours#
+ggplot(diamonds, aes(x=price, fill=cut)) +#
+  geom_histogram(position="dodge", binwidth=1000) +#
+  scale_fill_brewer()
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar() + scale_fill_brewer(palette="Blues") + ggtheme
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar() + scale_fill_manual(values=c("#000000", "#E69F00", "#0072B2", "#F0E442",  "#009E73"))+ ggtheme
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar() + scale_fill_manual(values=c("#000000", "#E69F00", "#0072B2", "#F0E442",  "#009E73"))+ theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank())
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar() + scale_fill_manual(values=c("#999999", "#E69F00", "#0072B2", "#F0E442",  "#009E73"))+ theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank())
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar() + scale_fill_manual(values=c("#999999", "#009E73", "#E69F00", "F0E442",  "#009E73"))+ theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank())
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar() + scale_fill_manual(values=c("#999999", "#009E73", "#E69F00", "F0E442",  "#009E73"))+ theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank())
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar() + scale_fill_manual(values=c("#999999", "#009E73", "#E69F00", "#F0E442",  "#009E73"))+ theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank())
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar() + scale_fill_manual(values=c("#999999", "#009E73", "#E69F00", "#F0E442",  "#009E73"))+ theme_bw() +
+()
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar() + scale_fill_manual(values=c("#999999", "#009E73", "#E69F00", "#F0E442",  "#009E73"))+ theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank())
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar() + scale_fill_manual(values=c("#999999", "#F0E442", "#E69F00", "#F0E442",  "#009E73"))+ theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank())
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k + geom_bar() + scale_fill_manual(values=c("#999999", "#F0E442", "#E69F00", "#0072B2",  "#009E73"))+ theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank())
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar() + scale_fill_manual(values=c("#bdcdd4", "#F0E442", "#D55E00", "#0072B2",  "#009E73"))+ theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank())
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+library(extrafont)#
+suppressWarnings(loadfonts())
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar() + scale_fill_manual(values=c("#bdcdd4", "#F0E442", "#D55E00", "#0072B2",  "#009E73"))+ theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank()) + theme(text=element_text(family="Georgia", size=15), axis.ticks.x = element_blank(), axis.text.x = element_text(vjust=-2))
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar() + scale_fill_manual(values=c("#bdcdd4", "#F0E442", "#D55E00", "#0072B2",  "#005c94"))+ theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank()) + theme(text=element_text(family="Georgia", size=15), axis.ticks.x = element_blank(), axis.text.x = element_text(vjust=-2))
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+stacked bar chart#
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar() + scale_fill_manual(values=c("#bdcdd4", "#F0E442", "#D55E00", "#005c94",  "#009E73"))+ theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank()) + theme(text=element_text(family="Georgia", size=15), axis.ticks.x = element_blank(), axis.text.x = element_text(vjust=-2))
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+k + geom_bar()  + theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank()) + theme(text=element_text(family="Georgia", size=15), axis.ticks.x = element_blank(), axis.text.x = element_text(vjust=-2))
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+gp <- k + geom_bar()  + theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank()) + theme(text=element_text(family="Georgia", 	size=12), axis.ticks.x = element_blank(), axis.text.x = element_text(vjust=-2))
+gp + scale_color_brewer()
+gp + scale_color_brewer()
+gp + scale_fill_brewer()
+? scale_fill_brewer
+gp + scale_fill_brewer(type ="qual")
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+gp + scale_fill_brewer(type ="div")
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+gp + scale_fill_brewer(type ="qual")
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+scale_fill_brewer(type ="qual")
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+gp <- k + geom_bar()  + theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank()) + theme(text=element_text(family="Georgia", 	size=12), axis.ticks.x = element_blank(), axis.text.x = element_text(vjust=-2))#
+#
+gp + scale_fill_brewer(type ="qual") #+scale_fill_manual(values=c("#bdcdd4", "#F0E442", "#D55E00", "#005c94",  "#009E73"))
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+gp <- k + geom_bar()  + theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank()) + theme(text=element_text(family="Georgia", 	size=8), axis.ticks.x = element_blank(), axis.text.x = element_text(vjust=-2))#
+#
+gp + scale_fill_brewer(type ="qual") #+scale_fill_manual(values=c("#bdcdd4", "#F0E442", "#D55E00", "#005c94",  "#009E73"))
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+gp <- k + geom_bar()  + theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank()) + theme(text=element_text(family="Georgia", 	size=8), axis.ticks.x = element_blank(), axis.text.x = element_text(vjust=-2)) + xlab("")
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+gp + scale_fill_brewer(type ="qual") #+scale_fill_manual(values=c("#bdcdd4", "#F0E442", "#D55E00", "#005c94",  "#009E73"))
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+gp + scale_fill_brewer(type ="qual") #+scale_fill_manual(values=c("#bdcdd4", "#F0E442", "#D55E00", "#005c94",  "#009E73"))#
+gp + scale_fill_manual(values=c("#bdcdd4", "#F0E442", "#D55E00", "#005c94",  "#009E73"))
+str(tit)
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+png("grandSlams_%02d.png", width = 1480, height = 1000)#
+gp + scale_fill_brewer(type ="qual") #+scale_fill_manual(values=c("#bdcdd4", "#F0E442", "#D55E00", "#005c94",  "#009E73"))#
+gp + scale_fill_manual(values=c("#bdcdd4", "#F0E442", "#D55E00", "#005c94",  "#009E73"))#
+dev.off()
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+pl.subset <- names(which(tapply(titles$title, titles$Singles, sum) > 1))#
+pl.subset <- pl.subset[pl.subset %in% names(player1)]#
+#
+tit <- titles[titles[,1] %in% pl.subset,]#
+#
+sumTit <- tapply(tit$title, tit$Singles, sum)#
+tit$Singles <- factor(tit$Singles, levels = names(sumTit)[order(sumTit)])#
+#
+# stacked bar chart#
+k <- ggplot(tit, aes(x = Singles, y = title, fill = tournament))#
+gp <- k + geom_bar()  + theme_bw() + theme(panel.grid.major.x=element_blank(), panel.border = element_blank()) + theme(text=element_text(family="Georgia", 	size=8), axis.ticks.x = element_blank(), axis.text.x = element_text(vjust=-2)) + xlab("")#
+#
+png("grandSlams_%02d.png", width = 1480, height = 1000)#
+gp + scale_fill_brewer(type ="qual") #+scale_fill_manual(values=c("#bdcdd4", "#F0E442", "#D55E00", "#005c94",  "#009E73"))#
+gp + scale_fill_manual(values=c("#bdcdd4", "#F0E442", "#D55E00", "#005c94",  "#009E73"))#
+dev.off()
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+png("grandSlams_%02d.png", width = 1480, height = 1000)#
+gp + scale_fill_brewer(type ="qual") #+scale_fill_manual(values=c("#bdcdd4", "#F0E442", "#D55E00", "#005c94",  "#009E73"))#
+gp + scale_fill_manual(values=c("#bdcdd4", "#F0E442", "#D55E00", "#005c94",  "#009E73"))#
+dev.off()
