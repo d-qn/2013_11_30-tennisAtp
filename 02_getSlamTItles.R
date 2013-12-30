@@ -10,7 +10,9 @@ n1.file <- "n1players.Rdata"
 load(n1.file)
 
 slams <- c("London-Finals.aspx", "Australian-Open.aspx", "Roland-Garros.aspx", "US-Open.aspx", "Wimbledon.aspx")
-surfaces <- c("Reliability-Overall-Career-List.aspx", "Reliability-Hard-Career-List.aspx", "Reliability-Clay-Career-List.aspx", 	"Reliability-Grass-Career-List.aspx")
+surfaces <- c("Reliability-Overall-Career-List.aspx", "Reliability-Hard-Career-List.aspx", "Reliability-Clay-Career-List.aspx", 	"Reliability-Grass-Career-List.aspx", "Reliability-Overall-Current-List.aspx",
+	"Reliability-Clay-Current-List.aspx",
+	"Reliability-Grass-Current-List.aspx", "Reliability-Hard-Current-List.aspx")
 
 names(player1) <- sapply(player1, function(p) {
 		p.splt <- strsplit(p, ",\\s")
@@ -80,7 +82,7 @@ pl <- unique(tit$Singles)
 stat.prefix <- "http://www.atpworldtour.com/Reliability-Zone/"
 
 stats <- do.call(rbind, lapply(surfaces, function(s) {
-	surface <- gsub("Reliability-(.*)-Career-List.aspx", "\\1",s)
+	surface <- gsub("Reliability-(.*)-(Career|Current)-List.aspx", "\\1",s)
 
 	url <- paste(stat.prefix , s, sep = "")
 	html.tb <- readHTMLTable(url, stringsAsFactors = FALSE)[[1]]
@@ -90,5 +92,5 @@ stats <- do.call(rbind, lapply(surfaces, function(s) {
 	html.tb <- html.tb[html.tb[,1] %in% as.character(pl),]
 
 	html.tb <- cbind(html.tb, (do.call(rbind, strsplit(html.tb[,3], "-"))))
-	cbind(ddply(html.tb, .(Singles), summarize, title = length(Year)), tournament = sname)
+	cbind(html.tb, surface = surface)
 }))

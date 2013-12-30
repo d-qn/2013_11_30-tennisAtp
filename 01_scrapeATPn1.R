@@ -4,6 +4,9 @@ library(RColorBrewer)
 library(gplots)
 library(ggplot2)
 library(plyr)
+library(extrafont)
+loadfonts()
+
 
 loadSavedN1players <- TRUE
 file <- "allATP_1-100.Rdata"
@@ -189,10 +192,13 @@ dateLabel[ii[1]] <- format(date.reg[ii[1]], "%Y-%m-%d")
 
 
 
-png("fig/heatmap_atp.png", width = 1480, height = 1000, res = 160)
-heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.5, margin = c(5,8),
-	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.75, trace= "none",
-	lhei = c(1.2, 5), lwid = c(0.9,6), cexRow = 0.6, labCol = dateLabel)
+#png("fig/heatmap_atp.png", width = 1480, height = 1000, res = 200)
+pdf("fig/heatmap_atp.pdf", width = 16, height = 9,  family="Georgia")
+#svg("fig/heatmap_atp.svg", width = 16, height = 9,  family="Georgia", antialias= "none")
+
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.1, margin = c(7,13),
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.9, trace= "none",
+	lhei = c(0.8, 5), lwid = c(0.9,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))
 dev.off()
 
 

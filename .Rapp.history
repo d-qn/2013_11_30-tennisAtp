@@ -75,9 +75,9 @@ library(RColorBrewer)#
 library(gplots)#
 library(ggplot2)#
 library(plyr)#
-#
+library(extrafont)#
+loadfonts()#
 loadSavedN1players <- TRUE#
-#
 file <- "allATP_1-100.Rdata"#
 n1.file <- "n1players.Rdata"#
 #
@@ -233,14 +233,12 @@ colnames(n1.ranking) <- player1#
 for (i in seq_along(atp)) {#
 	idx <- match(index(atp[[i]]), index(n1.ranking))#
 	n1.ranking[idx,i] <- atp[[i]]#
-}
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-pdf("fig/heatmap_atp.pdf", width = 8.125, height = 7)#
-heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1, margin = c(5,8),#
-	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.75, trace= "none",#
-	lhei = c(1.2, 5), lwid = c(0.9,6), cexRow = 0.6, labCol = dateLabel)#
-dev.off()
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+}#
+#
+###  -------------------------------------------------------------------------------------------------------------  ####
+###      4. Plot heatmap#
+###  -------------------------------------------------------------------------------------------------------------  ####
+#
 date.reg <- c(seq(min(dates), max(dates), 7))#
 #
 # ugly hack to add another date (for connors he was for one week n2, not visible otherwise)#
@@ -255,384 +253,190 @@ ranks <- max(n1.eqranking, na.rm =T)#
 dateLabel <- rep("", length(date.reg))#
 ii <- which(!duplicated(format(date.reg, format = "%Y")))#
 dateLabel[ii[-1]] <- format(date.reg[ii[-1]], "%Y")#
-dateLabel[ii[1]] <- format(date.reg[ii[1]], "%Y-%m-%d")#
-#png("fig/heatmap_atp.png", width = 1480, height = 1000, res = 150)#
-pdf("fig/heatmap_atp.pdf", width = 8.125, height = 7)#
-heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1, margin = c(5,8),#
+dateLabel[ii[1]] <- format(date.reg[ii[1]], "%Y-%m-%d")
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+pdf("fig/heatmap_atp.pdf", width = 14, height = 10,  family="Garamond")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.2, margin = c(5,8),#
 	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.75, trace= "none",#
-	lhei = c(1.2, 5), lwid = c(0.9,6), cexRow = 0.6, labCol = dateLabel)#
+	lhei = c(0.7, 5), lwid = c(0.8,6), cexRow = 0.7, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
 dev.off()
 setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-png("fig/heatmap_atp.png", width = 1480, height = 1000, res = 150)#
-heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1, margin = c(5,8),#
+pdf("fig/heatmap_atp.pdf", width = 14, height = 10,  family="Georgia")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.2, margin = c(5,8),#
 	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.75, trace= "none",#
-	lhei = c(1.2, 5), lwid = c(0.9,6), cexRow = 0.6, labCol = dateLabel)#
+	lhei = c(0.7, 5), lwid = c(0.8,6), cexRow = 0.7, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
 dev.off()
 setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-png("fig/heatmap_atp.png", width = 780, height = 1000, res = 300)#
-heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1, margin = c(5,8),#
+pdf("fig/heatmap_atp.pdf", width = 14, height = 10,  family="Georgia")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.2, margin = c(5,8.5),#
 	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.75, trace= "none",#
-	lhei = c(1.2, 5), lwid = c(0.9,6), cexRow = 0.6, labCol = dateLabel)#
+	lhei = c(0.7, 5), lwid = c(0.8,6), cexRow = 0.7, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
 dev.off()
 setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-png("fig/heatmap_atp.png", width = 780, height = 1000, res = 200)#
-heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1, margin = c(5,8),#
+pdf("fig/heatmap_atp.pdf", width = 14, height = 10,  family="Georgia")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.2, margin = c(5,8.5),#
 	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.75, trace= "none",#
-	lhei = c(1.2, 5), lwid = c(0.9,6), cexRow = 0.6, labCol = dateLabel)#
+	lhei = c(0.7, 5), lwid = c(0.8,6), cexRow = 0.8, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
 dev.off()
 setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-png("fig/heatmap_atp.png", width = 780, height = 1000, res = 180)#
-heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1, margin = c(5,8),#
+pdf("fig/heatmap_atp.pdf", width = 14, height = 10,  family="Georgia")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.2, margin = c(5,9),#
 	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.75, trace= "none",#
-	lhei = c(1.2, 5), lwid = c(0.9,6), cexRow = 0.6, labCol = dateLabel)#
+	lhei = c(0.7, 5), lwid = c(0.8,6), cexRow = 1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
 dev.off()
 setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-png("fig/heatmap_atp.png", width = 780, height = 1000, res = 150)#
-heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1, margin = c(5,8),#
+pdf("fig/heatmap_atp.pdf", width = 20, height = 15,  family="Georgia")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.2, margin = c(5,10),#
 	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.75, trace= "none",#
-	lhei = c(1.2, 5), lwid = c(0.9,6), cexRow = 0.6, labCol = dateLabel)#
+	lhei = c(0.7, 5), lwid = c(0.8,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
+dev.off()
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+pdf("fig/heatmap_atp.pdf", width = 16, height = 10,  family="Georgia")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.2, margin = c(5,10),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.75, trace= "none",#
+	lhei = c(0.7, 5), lwid = c(0.8,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
+dev.off()
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+pdf("fig/heatmap_atp.pdf", width = 17, height = 10,  family="Georgia")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.2, margin = c(5,10),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.75, trace= "none",#
+	lhei = c(0.7, 5), lwid = c(0.8,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
+dev.off()
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+pdf("fig/heatmap_atp.pdf", width = 17, height = 10,  family="Georgia")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.2, margin = c(5,11),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.9, trace= "none",#
+	lhei = c(0.7, 5), lwid = c(0.8,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
+dev.off()
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+pdf("fig/heatmap_atp.pdf", width = 16, height = 9,  family="Georgia")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.2, margin = c(5,11),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.9, trace= "none",#
+	lhei = c(0.7, 5), lwid = c(0.8,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
+dev.off()
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+pdf("fig/heatmap_atp.pdf", width = 16, height = 9,  family="Georgia")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.2, margin = c(5.5,12),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.9, trace= "none",#
+	lhei = c(0.9, 5), lwid = c(0.9,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
+dev.off()
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+pdf("fig/heatmap_atp.pdf", width = 16, height = 9,  family="Georgia")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.2, margin = c(6,13),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.9, trace= "none",#
+	lhei = c(0.8, 5), lwid = c(0.9,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
+dev.off()
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+pdf("fig/heatmap_atp.pdf", width = 16, height = 9,  family="Georgia")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.1, margin = c(6,13),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.9, trace= "none",#
+	lhei = c(0.8, 5), lwid = c(0.9,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
+dev.off()
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+pdf("fig/heatmap_atp.pdf", width = 16, height = 9,  family="Georgia")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.1, margin = c(7,13),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.9, trace= "none",#
+	lhei = c(0.8, 5), lwid = c(0.9,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
+dev.off()
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+pdf("fig/heatmap_atp.pdf", width = 16, height = 9,  family="Georgia")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.1, margin = c(7,13),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.8, trace= "none",#
+	lhei = c(0.8, 5), lwid = c(0.9,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
+dev.off()
+loadfonts()
+pdfFonts()
+names(pdfFonts())
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+pdf("fig/heatmap_atp.pdf", width = 16, height = 9,  family="Helvetica")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.1, margin = c(7,13),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.8, trace= "none",#
+	lhei = c(0.8, 5), lwid = c(0.9,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
+dev.off()
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+pdf("fig/heatmap_atp.pdf", width = 16, height = 9,  family="Georgia")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.1, margin = c(7,13),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.8, trace= "none",#
+	lhei = c(0.8, 5), lwid = c(0.9,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
+dev.off(
+)
+setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
+pdf("fig/heatmap_atp.pdf", width = 16, height = 9,  family="Georgia", colormodel = "cmyk")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.1, margin = c(7,13),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.8, trace= "none",#
+	lhei = c(0.8, 5), lwid = c(0.9,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
 dev.off()
 setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
 png("fig/heatmap_atp.png", width = 1480, height = 1000, res = 200)#
-heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1, margin = c(5,8),#
-	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.75, trace= "none",#
-	lhei = c(1.2, 5), lwid = c(0.9,6), cexRow = 0.6, labCol = dateLabel)#
+#pdf("fig/heatmap_atp.pdf", width = 16, height = 9,  family="Georgia", colormodel = "cmyk")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.1, margin = c(7,13),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.8, trace= "none",#
+	lhei = c(0.8, 5), lwid = c(0.9,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
 dev.off()
 setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-png("fig/heatmap_atp.png", width = 1480, height = 1000, res = 160)#
-heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1, margin = c(5,8),#
-	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.75, trace= "none",#
-	lhei = c(1.2, 5), lwid = c(0.9,6), cexRow = 0.6, labCol = dateLabel)#
+pdf("fig/heatmap_atp.pdf", width = 16, height = 9,  family="Georgia", useDingbats = FALSE)#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.1, margin = c(7,13),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.8, trace= "none",#
+	lhei = c(0.8, 5), lwid = c(0.9,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
 dev.off()
 setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-png("fig/heatmap_atp.png", width = 1480, height = 1000, res = 160)#
-heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.5, margin = c(5,8),#
-	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.75, trace= "none",#
-	lhei = c(1.2, 5), lwid = c(0.9,6), cexRow = 0.6, labCol = dateLabel)#
+svg("fig/heatmap_atp.svg", width = 16, height = 9,  family="Georgia", useDingbats = FALSE)#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.1, margin = c(7,13),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.8, trace= "none",#
+	lhei = c(0.8, 5), lwid = c(0.9,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
 dev.off()
 setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-png("fig/heatmap_atp.png", width = 1480, height = 1000, res = 160)#
-heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.5, margin = c(5,8),#
-	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.75, trace= "none",#
-	lhei = c(1.2, 5), lwid = c(0.9,6), cexRow = 0.6, labCol = dateLabel)#
+svg("fig/heatmap_atp.svg", width = 16, height = 9,  family="Georgia")#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.1, margin = c(7,13),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.8, trace= "none",#
+	lhei = c(0.8, 5), lwid = c(0.9,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
 dev.off()
 setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-dob <- sapply(n1.player, function(l) {#
-	stopifnot(names(l) == c("atp", "dob"))#
-	as.Date(l[['dob']], format = "%d.%m.%Y")#
-})#
-# very ugly hack for #
-idxna <- sapply(dob, nchar) >=1#
-if(any(is.na(idxna)) && which(is.na(idxna))==21) {#
-	dob[[21]] <- as.Date("12.02.1980)", "%d.%M.%Y")#
-}#
-#
-age.day <- do.call(cbind, lapply(dob, function(a) as.numeric(index(n1.ranking) - a)))#
-age <- age.day / 365.25#
-#
-stopifnot(dim(age)==dim(n1.ranking))#
-#
-n1.ar <- do.call(rbind, lapply(1:ncol(age), function(a) data.frame(age = age[,a], ranking = n1.ranking[,a], player = player[a])))#
-n1.ar <- n1.ar[which(!is.na(n1.ar$ranking)),]#
-#
-n1.ar2 <- n1.ar[!n1.ar$player %in% levels(n1.ar$player)[1:4],]#
-n1.ar2$rage <- round(n1.ar2$age)#
-n1.ar3 <- ddply(n1.ar2, .(player,rage, color), summarize, yranking = mean(ranking, na.rm = T))#
-##
-# get the youngest and oldest age n1#
-n1.ar3$color <- NA#
-#p.young <- n1.ar[which(n1.ar$age == min(n1.ar[n1.ar$ranking == 1,'age']) & n1.ar$ranking == 1), 'player']#
-iiidx <- which(n1.ar$age == max(n1.ar[n1.ar$ranking == 1,'age']) & n1.ar$ranking == 1)#
-p.old <- as.character(n1.ar[iiidx, 'player'])#
-#
-n1.ar3[n1.ar3$player == p.old,'color'] <- 'oldest'#
-#n1.ar3[n1.ar3$player == p.young,'color'] <- 'youngest'#
-#
-# find the players still active#
-ip <- which(!is.na(n1.eqranking[nrow(n1.eqranking),]))#
-	 <- data.frame(player = c(player[ip], p.old ), age = c(sapply(dob[ip], function(d) Sys.Date()- d) / 365.25, n1.ar[iiidx, 'age'])#
-png("fig/agingRanking_%02d.png", width = 1480, height = 1000, res = 180)#
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 700) +#
-	 geom_line(aes(rage, yranking, group = player), colour = "grey", n = 100, se = F, size = 0.1) + ggtheme#
-#
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 1000) +#
- 	 geom_smooth(aes(rage, yranking, group = player, colour = color), colour = "grey", n = 100, se = F, size = 0.15, span = 0.2) + ggtheme +#
- 	 geom_smooth(data =n1.ar3[!is.na(n1.ar3$color),], aes (rage, yranking, group = player, colour = color), n = 100, se = F, size = 0.2, span = 0.2) +#
-	 xlab("age") + ylab("yearly average ATP ranking")#
-#
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 1000) +#
-	 geom_smooth(aes(rage, yranking, group = player, colour = color), colour = "grey", n = 100, se = F, size = 0.15, span = 0.2) + ggtheme +#
-	 geom_smooth(data =n1.ar3[!is.na(n1.ar3$color),], aes (rage, yranking, group = player, colour = color), n = 100, se = F, size = 0.2, span = 0.2)+#
-	 geom_vline(data = playerAge, aes(xintercept = age, colour = player), alpha = 0.5)#
-#
-i <- 1#
- while(i <= nlevels(n1.ar3$player)) {#
-	 if (i %% 5 == 0) {#
-		 p <- levels(n1.ar3$player)[(i-4):i]#
-		 #browser()#
-		 gp <- ggplot(data = n1.ar3[n1.ar3$player %in% p,], aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) +#
-		 	xlim(15, 35) + ylim (-30, 700) + geom_smooth(aes(rage, yranking, group = player, group = player, colour = player),#
-			n = 100, se = F, size = 0.3, span = 0.2) + ggtheme#
-#
-		 print(gp)#
-#
-	 }#
-	 i <- i +1#
-}#
+svg("fig/heatmap_atp.svg", width = 16, height = 9,  family="Georgia", antialias= "none")#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.1, margin = c(7,13),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.8, trace= "none",#
+	lhei = c(0.8, 5), lwid = c(0.9,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
 dev.off()
 setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-dob <- sapply(n1.player, function(l) {#
-	stopifnot(names(l) == c("atp", "dob"))#
-	as.Date(l[['dob']], format = "%d.%m.%Y")#
-})#
-# very ugly hack for #
-idxna <- sapply(dob, nchar) >=1#
-if(any(is.na(idxna)) && which(is.na(idxna))==21) {#
-	dob[[21]] <- as.Date("12.02.1980)", "%d.%M.%Y")#
-}#
-#
-age.day <- do.call(cbind, lapply(dob, function(a) as.numeric(index(n1.ranking) - a)))#
-age <- age.day / 365.25#
-#
-stopifnot(dim(age)==dim(n1.ranking))#
-#
-n1.ar <- do.call(rbind, lapply(1:ncol(age), function(a) data.frame(age = age[,a], ranking = n1.ranking[,a], player = player[a])))#
-n1.ar <- n1.ar[which(!is.na(n1.ar$ranking)),]
+svg("fig/heatmap_atp.svg", width = 16, height = 9,  family="Georgia", antialias= "none")#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.1, margin = c(7,13),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.8, trace= "none",#
+	lhei = c(0.8, 5), lwid = c(0.9,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
+dev.off()
 setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-n1.ar2 <- n1.ar[!n1.ar$player %in% levels(n1.ar$player)[1:4],]#
-n1.ar2$rage <- round(n1.ar2$age)
+pdf("fig/heatmap_atp.pdf", width = 16, height = 9,  family="Georgia")#
+#svg("fig/heatmap_atp.svg", width = 16, height = 9,  family="Georgia", antialias= "none")#
+#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.1, margin = c(7,13),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.8, trace= "none",#
+	lhei = c(0.8, 5), lwid = c(0.9,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
+dev.off()
 setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-n1.ar3 <- ddply(n1.ar2, .(player,rage, color), summarize, yranking = mean(ranking, na.rm = T))
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-n1.ar$color <- NA#
-#p.young <- n1.ar[which(n1.ar$age == min(n1.ar[n1.ar$ranking == 1,'age']) & n1.ar$ranking == 1), 'player']#
-iiidx <- which(n1.ar$age == max(n1.ar[n1.ar$ranking == 1,'age']) & n1.ar$ranking == 1)#
-p.old <- as.character(n1.ar[iiidx, 'player'])
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-n1.ar2 <- n1.ar[!n1.ar$player %in% levels(n1.ar$player)[1:4],]#
-n1.ar2$rage <- round(n1.ar2$age)#
-n1.ar3 <- ddply(n1.ar2, .(player,rage, color), summarize, yranking = mean(ranking, na.rm = T))
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-ip <- which(!is.na(n1.eqranking[nrow(n1.eqranking),]))#
-	 <- data.frame(player = c(player[ip], p.old ), age = c(sapply(dob[ip], function(d) Sys.Date()- d) / 365.25, n1.ar[iiidx, 'age'])#
-png("fig/agingRanking_%02d.png", width = 1480, height = 1000, res = 180)#
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 700) +#
-	 geom_line(aes(rage, yranking, group = player), colour = "grey", n = 100, se = F, size = 0.1) + ggtheme#
+png("fig/heatmap_atp.png", width = 1480, height = 1000, res = 200)#
+pdf("fig/heatmap_atp.pdf", width = 16, height = 9,  family="Georgia")#
+#svg("fig/heatmap_atp.svg", width = 16, height = 9,  family="Georgia", antialias= "none")#
 #
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 1000) +#
- 	 geom_smooth(aes(rage, yranking, group = player, colour = color), colour = "grey", n = 100, se = F, size = 0.15, span = 0.2) + ggtheme +#
- 	 geom_smooth(data =n1.ar3[!is.na(n1.ar3$color),], aes (rage, yranking, group = player, colour = color), n = 100, se = F, size = 0.2, span = 0.2) +#
-	 xlab("age") + ylab("yearly average ATP ranking")#
-#
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 1000) +#
-	 geom_smooth(aes(rage, yranking, group = player, colour = color), colour = "grey", n = 100, se = F, size = 0.15, span = 0.2) + ggtheme +#
-	 geom_smooth(data =n1.ar3[!is.na(n1.ar3$color),], aes (rage, yranking, group = player, colour = color), n = 100, se = F, size = 0.2, span = 0.2)+#
-	 geom_vline(data = playerAge, aes(xintercept = age, colour = player), alpha = 0.5)#
-#
-i <- 1#
- while(i <= nlevels(n1.ar3$player)) {#
-	 if (i %% 5 == 0) {#
-		 p <- levels(n1.ar3$player)[(i-4):i]#
-		 #browser()#
-		 gp <- ggplot(data = n1.ar3[n1.ar3$player %in% p,], aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) +#
-		 	xlim(15, 35) + ylim (-30, 700) + geom_smooth(aes(rage, yranking, group = player, group = player, colour = player),#
-			n = 100, se = F, size = 0.3, span = 0.2) + ggtheme#
-#
-		 print(gp)#
-#
-	 }#
-	 i <- i +1#
-}#
-dev.off()#
-#
-# ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 700) + geom_smooth(aes(rage, yranking, group = player,colour = player), n = 100, se = F, size = 0.1) + ggtheme#
-# ggplot(data = n1.ar, aes(age, ranking)) + geom_smooth(aes(age, ranking, group = player, group = player), n = 50, se = F, size = 0.1) +#
-#     geom_smooth(data = n1.ar, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 700) + ggtheme
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-ip <- which(!is.na(n1.eqranking[nrow(n1.eqranking),]))#
-	 <- data.frame(player = c(player[ip], p.old ), age = c(sapply(dob[ip], function(d) Sys.Date()- d) / 365.25, n1.ar[iiidx, 'age'])
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-ip <- which(!is.na(n1.eqranking[nrow(n1.eqranking),]))#
-playerAge <- data.frame(player = c(player[ip], p.old ), age = c(sapply(dob[ip], function(d) Sys.Date()- d) / 365.25, n1.ar[iiidx, 'age'])
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-png("fig/agingRanking_%02d.png", width = 1480, height = 1000, res = 180)#
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 700) +#
-	 geom_line(aes(rage, yranking, group = player), colour = "grey", n = 100, se = F, size = 0.1) + ggtheme#
-#
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 1000) +#
- 	 geom_smooth(aes(rage, yranking, group = player, colour = color), colour = "grey", n = 100, se = F, size = 0.15, span = 0.2) + ggtheme +#
- 	 geom_smooth(data =n1.ar3[!is.na(n1.ar3$color),], aes (rage, yranking, group = player, colour = color), n = 100, se = F, size = 0.2, span = 0.2) +#
-	 xlab("age") + ylab("yearly average ATP ranking")#
-#
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 1000) +#
-	 geom_smooth(aes(rage, yranking, group = player, colour = color), colour = "grey", n = 100, se = F, size = 0.15, span = 0.2) + ggtheme +#
-	 geom_smooth(data =n1.ar3[!is.na(n1.ar3$color),], aes (rage, yranking, group = player, colour = color), n = 100, se = F, size = 0.2, span = 0.2)+#
-	 geom_vline(data = playerAge, aes(xintercept = age, colour = player), alpha = 0.5)#
-#
-i <- 1#
- while(i <= nlevels(n1.ar3$player)) {#
-	 if (i %% 5 == 0) {#
-		 p <- levels(n1.ar3$player)[(i-4):i]#
-		 #browser()#
-		 gp <- ggplot(data = n1.ar3[n1.ar3$player %in% p,], aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) +#
-		 	xlim(15, 35) + ylim (-30, 700) + geom_smooth(aes(rage, yranking, group = player, group = player, colour = player),#
-			n = 100, se = F, size = 0.3, span = 0.2) + ggtheme#
-#
-		 print(gp)#
-#
-	 }#
-	 i <- i +1#
-}#
-dev.off()#
-#
-# ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 700) + geom_smooth(aes(rage, yranking, group = player,colour = player), n = 100, se = F, size = 0.1) + ggtheme#
-# ggplot(data = n1.ar, aes(age, ranking)) + geom_smooth(aes(age, ranking, group = player, group = player), n = 50, se = F, size = 0.1) +#
-#     geom_smooth(data = n1.ar, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 700) + ggtheme
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 700) +#
-	 geom_line(aes(rage, yranking, group = player), colour = "grey", n = 100, se = F, size = 0.1) + ggtheme#
-#
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 1000) +#
- 	 geom_smooth(aes(rage, yranking, group = player, colour = color), colour = "grey", n = 100, se = F, size = 0.15, span = 0.2) + ggtheme +#
- 	 geom_smooth(data =n1.ar3[!is.na(n1.ar3$color),], aes (rage, yranking, group = player, colour = color), n = 100, se = F, size = 0.2, span = 0.2) +#
-	 xlab("age") + ylab("yearly average ATP ranking")
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-n1.ar3
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 1000) +#
- 	 geom_smooth(aes(rage, yranking, group = player, colour = color), colour = "grey", n = 100, se = F, size = 0.15, span = 0.2) + ggtheme +#
- 	 geom_smooth(data =n1.ar3[!is.na(n1.ar3$color),], aes (rage, yranking, group = player, colour = color), n = 100, se = F, size = 0.2, span = 0.2) +#
-	 xlab("age") + ylab("yearly average ATP ranking")
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 1000) +#
-	 geom_smooth(aes(rage, yranking, group = player, colour = color), colour = "grey", n = 100, se = F, size = 0.15, span = 0.2) + ggtheme +#
-	 geom_smooth(data =n1.ar3[!is.na(n1.ar3$color),], aes (rage, yranking, group = player, colour = color), n = 100, se = F, size = 0.2, span = 0.2)+#
-	 geom_vline(data = playerAge, aes(xintercept = age, colour = player), alpha = 0.5)
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-playerAge
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-playerAge <- data.frame(player = c(player[ip], p.old ), age = c(sapply(dob[ip], function(d) Sys.Date()- d) / 365.25, n1.ar[iiidx, 'age'])
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-playerAge <- data.frame(player = c(player[ip], p.old ), age = c(sapply(dob[ip], function(d) Sys.Date()- d) / 365.25, n1.ar[iiidx, 'age']))
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 1000) +#
-	 geom_smooth(aes(rage, yranking, group = player, colour = color), colour = "grey", n = 100, se = F, size = 0.15, span = 0.2) + ggtheme +#
-	 geom_smooth(data =n1.ar3[!is.na(n1.ar3$color),], aes (rage, yranking, group = player, colour = color), n = 100, se = F, size = 0.2, span = 0.2)+#
-	 geom_vline(data = playerAge, aes(xintercept = age, colour = player), alpha = 0.5)
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-n1.ar2 <- n1.ar[!n1.ar$player %in% levels(n1.ar$player)[1:4],]#
-n1.ar2$rage <- round(n1.ar2$age)#
-n1.ar3 <- ddply(n1.ar2, .(player,rage, color), summarize, yranking = mean(ranking, na.rm = T))#
-n1.ar3[n1.ar3$player == p.old,'color'] <- 'oldest'#
-#n1.ar3[n1.ar3$player == p.young,'color'] <- 'youngest'#
-#
-# find the players still active#
-ip <- which(!is.na(n1.eqranking[nrow(n1.eqranking),]))#
-playerAge <- data.frame(player = c(player[ip], p.old ), age = c(sapply(dob[ip], function(d) Sys.Date()- d) / 365.25, n1.ar[iiidx, 'age']))
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-png("fig/agingRanking_%02d.png", width = 1480, height = 1000, res = 180)#
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 700) +#
-	 geom_line(aes(rage, yranking, group = player), colour = "grey", n = 100, se = F, size = 0.1) + ggtheme#
-#
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 1000) +#
- 	 geom_smooth(aes(rage, yranking, group = player, colour = color), colour = "grey", n = 100, se = F, size = 0.15, span = 0.2) + ggtheme +#
- 	 geom_smooth(data =n1.ar3[!is.na(n1.ar3$color),], aes (rage, yranking, group = player, colour = color), n = 100, se = F, size = 0.2, span = 0.2) +#
-	 xlab("age") + ylab("yearly average ATP ranking")#
-#
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 1000) +#
-	 geom_smooth(aes(rage, yranking, group = player, colour = color), colour = "grey", n = 100, se = F, size = 0.15, span = 0.2) + ggtheme +#
-	 geom_smooth(data =n1.ar3[!is.na(n1.ar3$color),], aes (rage, yranking, group = player, colour = color), n = 100, se = F, size = 0.2, span = 0.2)+#
-	 geom_vline(data = playerAge, aes(xintercept = age, colour = player), alpha = 0.5)#
-#
-i <- 1#
- while(i <= nlevels(n1.ar3$player)) {#
-	 if (i %% 5 == 0) {#
-		 p <- levels(n1.ar3$player)[(i-4):i]#
-		 #browser()#
-		 gp <- ggplot(data = n1.ar3[n1.ar3$player %in% p,], aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) +#
-		 	xlim(15, 35) + ylim (-30, 700) + geom_smooth(aes(rage, yranking, group = player, group = player, colour = player),#
-			n = 100, se = F, size = 0.3, span = 0.2) + ggtheme#
-#
-		 print(gp)#
-#
-	 }#
-	 i <- i +1#
-}#
-dev.off()#
-#
-# ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 700) + geom_smooth(aes(rage, yranking, group = player,colour = player), n = 100, se = F, size = 0.1) + ggtheme#
-# ggplot(data = n1.ar, aes(age, ranking)) + geom_smooth(aes(age, ranking, group = player, group = player), n = 50, se = F, size = 0.1) +#
-#     geom_smooth(data = n1.ar, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 700) + ggtheme
-setwd('/Users/dqn/Google Drive/dataJournalism/2013_11_30 tennisAtp')
-png("fig/heatmap_atp.png", width = 1480, height = 1000, res = 160)#
-heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.5, margin = c(5,8),#
-	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.75, trace= "none",#
-	lhei = c(1.2, 5), lwid = c(0.9,6), cexRow = 0.6, labCol = dateLabel)#
-dev.off()#
-# age <- sapply(1:ncol(n1.ranking), function(i) as.numeric(diff(index(n1.ranking)[range(which(!is.na(n1.ranking[,i])))])) / 365.25 )#
-#
-###  -------------------------------------------------------------------------------------------------------------  ####
-###      5. Aging curve#
-###  -------------------------------------------------------------------------------------------------------------  ####
-#
-dob <- sapply(n1.player, function(l) {#
-	stopifnot(names(l) == c("atp", "dob"))#
-	as.Date(l[['dob']], format = "%d.%m.%Y")#
-})#
-# very ugly hack for #
-idxna <- sapply(dob, nchar) >=1#
-if(any(is.na(idxna)) && which(is.na(idxna))==21) {#
-	dob[[21]] <- as.Date("12.02.1980)", "%d.%M.%Y")#
-}#
-#
-age.day <- do.call(cbind, lapply(dob, function(a) as.numeric(index(n1.ranking) - a)))#
-age <- age.day / 365.25#
-#
-stopifnot(dim(age)==dim(n1.ranking))#
-#
-n1.ar <- do.call(rbind, lapply(1:ncol(age), function(a) data.frame(age = age[,a], ranking = n1.ranking[,a], player = player[a])))#
-n1.ar <- n1.ar[which(!is.na(n1.ar$ranking)),]#
-#
-# get the youngest and oldest age n1#
-n1.ar$color <- NA#
-#p.young <- n1.ar[which(n1.ar$age == min(n1.ar[n1.ar$ranking == 1,'age']) & n1.ar$ranking == 1), 'player']#
-iiidx <- which(n1.ar$age == max(n1.ar[n1.ar$ranking == 1,'age']) & n1.ar$ranking == 1)#
-p.old <- as.character(n1.ar[iiidx, 'player'])#
-n1.ar2 <- n1.ar[!n1.ar$player %in% levels(n1.ar$player)[1:4],]#
-n1.ar2$rage <- round(n1.ar2$age)#
-n1.ar3 <- ddply(n1.ar2, .(player,rage, color), summarize, yranking = mean(ranking, na.rm = T))#
-n1.ar3[n1.ar3$player == p.old,'color'] <- 'oldest'#
-#n1.ar3[n1.ar3$player == p.young,'color'] <- 'youngest'#
-#
-# find the players still active#
-ip <- which(!is.na(n1.eqranking[nrow(n1.eqranking),]))#
-playerAge <- data.frame(player = c(player[ip], p.old ), age = c(sapply(dob[ip], function(d) Sys.Date()- d) / 365.25, n1.ar[iiidx, 'age']))#
-png("fig/agingRanking_%02d.png", width = 1480, height = 1000, res = 180)#
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 700) +#
-	 geom_line(aes(rage, yranking, group = player), colour = "grey", n = 100, se = F, size = 0.1) + ggtheme#
-#
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 1000) +#
- 	 geom_smooth(aes(rage, yranking, group = player, colour = color), colour = "grey", n = 100, se = F, size = 0.15, span = 0.2) + ggtheme +#
- 	 geom_smooth(data =n1.ar3[!is.na(n1.ar3$color),], aes (rage, yranking, group = player, colour = color), n = 100, se = F, size = 0.2, span = 0.2) +#
-	 xlab("age") + ylab("yearly average ATP ranking")#
-#
-ggplot(data = n1.ar3, aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) + xlim(15, 35) + ylim (-30, 1000) +#
-	 geom_smooth(aes(rage, yranking, group = player, colour = color), colour = "grey", n = 100, se = F, size = 0.15, span = 0.2) + ggtheme +#
-	 geom_smooth(data =n1.ar3[!is.na(n1.ar3$color),], aes (rage, yranking, group = player, colour = color), n = 100, se = F, size = 0.2, span = 0.2)+#
-	 geom_vline(data = playerAge, aes(xintercept = age, colour = player), alpha = 0.5)#
-#
-i <- 1#
- while(i <= nlevels(n1.ar3$player)) {#
-	 if (i %% 5 == 0) {#
-		 p <- levels(n1.ar3$player)[(i-4):i]#
-		 #browser()#
-		 gp <- ggplot(data = n1.ar3[n1.ar3$player %in% p,], aes(rage, yranking)) + geom_smooth(data = n1.ar2, aes(age, ranking), se = T, size = 1) +#
-		 	xlim(15, 35) + ylim (-30, 700) + geom_smooth(aes(rage, yranking, group = player, group = player, colour = player),#
-			n = 100, se = F, size = 0.3, span = 0.2) + ggtheme#
-#
-		 print(gp)#
-#
-	 }#
-	 i <- i +1#
-}#
+heatmap.2(t(log10(n1.eqranking)), Colv = NA, Rowv = NA, density.info = "none", dendrogram = "none", keysize = 1.1, margin = c(7,13),#
+	col = rev(colorRampPalette(brewer.pal(9,"Blues"))(255)), scale = "none", na.rm = T, cexCol = 0.9, trace= "none",#
+	lhei = c(0.8, 5), lwid = c(0.9,6), cexRow = 1.1, labCol = dateLabel, rowsep = 1:ncol(n1.eqranking), sepwidth = c(0, 0.01))#
 dev.off()
